@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { instance } from "@/services/axios";
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { useAppContext } from '@/contexts/AppContext';
 
 const Profile = () => {
   const [profileData, setProfileData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const userData = localStorage.getItem("user");
-
+  const { userData, setUserData } = useAppContext();
 
   useEffect(() => {
 
@@ -20,7 +20,6 @@ const Profile = () => {
         setError(null);
         setProfileData([]);
 
-        // const res = await instance.get("/match/");
         const res = await fetch("https://kooora-world.com/api/Client/profile/current_info", {
           method: "GET",
           headers: {
@@ -30,10 +29,15 @@ const Profile = () => {
             "currency": "kwd",
             "Accept": "application/json"
           }
-        })
+        });
+
+        const resBody = await res.json();
+
+        setProfileData(resBody.data)
         setLoading(false);
 
-        console.log("Profile :", res.data);
+        console.log("resBody.data :", resBody.data)
+
       } catch (err) {
         setError(err.message);
         setLoading(false);
@@ -41,7 +45,7 @@ const Profile = () => {
     }
 
     getData();
-  }, []);
+  }, [userData]);
 
   if (loading) {
     return <LoadingSpinner />
@@ -69,18 +73,18 @@ const Profile = () => {
             {/* Name */}
             <div className="flex flex-col text-white gap-2 md:w-1/2">
               <h3 className="text-xl font-semibold text-gray-300">الاسم</h3>
-              <p className='text-2xl'>السيد محمد فتحي</p>
+              <p className='text-2xl'>{profileData?.name}</p>
             </div>
 
             {/* Phone */}
             <div className="flex flex-col text-white gap-2 md:w-1/2">
               <h3 className="text-xl font-semibold text-gray-300">رقم الهاتف</h3>
-              <p className='text-2xl'>01020304050</p>
+              <p className='text-2xl'>{profileData?.phone}</p>
             </div>
 
             <div className="flex text-white items-center md:gap-10 md:w-1/2">
               <h3 className="text-xl font-semibold text-gray-300">نوع الحزمة</h3>
-              <div className='text-base text-white px-4 py-1 pb-2 bg-green-700 rounded-full'>حزمة مجانية</div>
+              <div className='text-base text-white px-4 py-1 pb-2 bg-green-700 rounded-full'>{profileData?.package_name}</div>
             </div>
           </div>
         </div>

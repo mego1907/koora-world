@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 import Modal from './Modal';
 import Login from './Login';
 import Register from './Register';
+import { useAppContext } from '@/contexts/AppContext';
 
 
 
@@ -18,13 +19,7 @@ const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
 
-  const [userData, setUserData] = useState({});
-
-  const localStorageUserData = localStorage.getItem("user");
-  
-  useEffect(() => {
-    setUserData(localStorageUserData)
-  }, [localStorageUserData])
+  const { userData, setUserData } = useAppContext();
 
   const allLinks = [
     {
@@ -84,6 +79,7 @@ const Navbar = () => {
       }
     })
 
+    setUserData({});
     localStorage.clear();
   }
 

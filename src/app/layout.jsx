@@ -1,7 +1,9 @@
+
 import Navbar from '@/components/Navbar'
 import './globals.css'
 import { Inter, Tajawal } from 'next/font/google'
 import Footer from '@/components/Footer'
+import { AppContextProvider } from '@/contexts/AppContext'
 
 const inter = Inter({ subsets: ['latin'] })
 const tajawal = Tajawal({ 
@@ -18,9 +20,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl">
       <body className={[inter.className, tajawal.className]}>
-        <Navbar />
-        {children}
-        <Footer />
+        <AppContextProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </AppContextProvider>
       </body>
     </html>
   )

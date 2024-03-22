@@ -1,7 +1,10 @@
 import React from 'react'
 import Modal from './Modal'
+import { useAppContext } from '@/contexts/AppContext';
 
 const Register = ({ openRegister, setOpenRegister }) => {
+  const { userData, setUserData } = useAppContext();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

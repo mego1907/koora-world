@@ -1,8 +1,12 @@
+"use client";
 import React, { useRef } from 'react'
 import Modal from './Modal'
+import { useAppContext } from '@/contexts/AppContext';
 
 const Login = ({ openLogin, setOpenLogin }) => {
   const formRef = useRef(undefined);
+
+  const { userData, setUserData } = useAppContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,8 +23,10 @@ const Login = ({ openLogin, setOpenLogin }) => {
         method: "POST",
         body: formData
       });
+      
 
       const data = await res.json();
+      setUserData(data.data)
       localStorage && localStorage.setItem("user", JSON.stringify(data.data));
       setOpenLogin(false);
 
@@ -29,7 +35,6 @@ const Login = ({ openLogin, setOpenLogin }) => {
     }
     
   }
-
 
   const closeModal = () => {
     setOpenLogin(false);
