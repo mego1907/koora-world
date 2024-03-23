@@ -4,7 +4,7 @@ import Image from "next/image";
 const PrevMatchesCard = () => {
   return (
     <div className='flex items-center justify-between p-5 px-8 bg-white'>
-      <div className="flex flex-col items-center justify-between text-2xl text-center">
+      <div className="flex flex-col items-center justify-between md:text-2xl text-xs text-center">
         <Image
           src="/assets/5bc4a932861d1c625156db71b514edba.jpg"
           alt="player"
@@ -15,7 +15,7 @@ const PrevMatchesCard = () => {
         <span>اسلام بركة</span>
       </div>
       <div className="flex flex-col items-center justify-between text-2xl text-center">
-        <h4 className="text-[#912681] text-2xl">هدف</h4>
+        <h4 className="text-[#912681] md:text-2xl text-sm">هدف</h4>
 
         <div className="flex items-center gap-2">
           {/* Left Team */}

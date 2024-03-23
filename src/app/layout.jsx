@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <body className={[inter.className, tajawal.className]}>
         <AppContextProvider>
           <Navbar />
-          {children}
+          <div className="min-h-[80vh]">{children}</div>
           <Footer />
         </AppContextProvider>
       </body>

@@ -53,9 +53,9 @@ const Profile = () => {
 
 
   return (
-    <div className='min-h-[60vh]'>
+    <div>
       <div className="container">
-        <h3 className="text-white text-3xl font-semibold mt-5">الملف الشخصي</h3>
+        <h3 className="text-white md:text-3xl text-lg font-semibold mt-5">الملف الشخصي</h3>
 
         <div className="my-10">
           {/* image */}
@@ -71,20 +71,20 @@ const Profile = () => {
 
           <div className="flex flex-col gap-12 my-16">
             {/* Name */}
-            <div className="flex flex-col text-white gap-2 md:w-1/2">
-              <h3 className="text-xl font-semibold text-gray-300">الاسم</h3>
-              <p className='text-2xl'>{profileData?.name}</p>
+            <div className="flex flex-col text-white gap-2 md:w-1/2 w-full items-center">
+              <h3 className="md:text-xl text-base font-semibold text-gray-300">الاسم</h3>
+              <p className='md:text-2xl text-sm'>{profileData?.name}</p>
             </div>
 
             {/* Phone */}
-            <div className="flex flex-col text-white gap-2 md:w-1/2">
-              <h3 className="text-xl font-semibold text-gray-300">رقم الهاتف</h3>
-              <p className='text-2xl'>{profileData?.phone}</p>
+            <div className="flex flex-col text-white gap-2 md:w-1/2 w-full items-center">
+              <h3 className="md:text-xl text-base font-semibold text-gray-300">رقم الهاتف</h3>
+              <p className='md:text-2xl text-sm'>{profileData?.phone}</p>
             </div>
 
-            <div className="flex text-white items-center md:gap-10 md:w-1/2">
-              <h3 className="text-xl font-semibold text-gray-300">نوع الحزمة</h3>
-              <div className='text-base text-white px-4 py-1 pb-2 bg-green-700 rounded-full'>{profileData?.package_name}</div>
+            <div className="flex text-white md:flex-row flex-col items-center md:gap-10 gap-5 md:w-1/2">
+              <h3 className="md:text-xl text-base font-semibold text-gray-300">نوع الحزمة</h3>
+              <div className='md:text-base text-sm text-white px-4 py-1 pb-2 bg-green-700 rounded-full'>{profileData?.package_name}</div>
             </div>
           </div>
         </div>

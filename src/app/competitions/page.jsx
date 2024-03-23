@@ -103,6 +103,7 @@ const Competitions = () => {
   useEffect(() => {
     const fetchCompetitionsData = async () => {
 
+      setLoading(true);
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/Client/Contest/GetAllContest`, {
         method: "GET",
         headers: {
@@ -115,6 +116,7 @@ const Competitions = () => {
       })
 
       const resBody = await res.json();
+      setLoading(false)
 
       if(resBody.status === 401) {
         setUserData({})

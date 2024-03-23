@@ -19,18 +19,15 @@ const MatchEventsSec = () => {
     }
   ]
 
-
-
-
   return (
     <div>
       {/* Tabs */}
-      <div className="flex justify-between gap-6 py-2 my-5 text-lg text-white">
+      <div className="flex justify-between md:gap-6 gap-2 py-2 my-5 md:text-lg text-xs text-white">
         {
           tabs.map((tab, i) => (
             <button
               type="button"
-              className={`w-1/3 h-10 pb-1 flex items-center justify-center rounded-full border border-white ${selectedTab === tab.name ? "bg-[#4185c5] border border-[#4185c5] text-white" : ""}`}
+              className={`w-1/3 md:h-10 pb-1 flex items-center justify-center rounded-full border border-white ${selectedTab === tab.name ? "bg-[#4185c5] border border-[#4185c5] text-white" : ""}`}
               key={i}
               onClick={() => setSelectedTab(tab.name)}
             >

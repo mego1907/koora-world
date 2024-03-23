@@ -85,10 +85,12 @@ const Navbar = () => {
 
 
   return (
-    <nav className='h-[112px] sticky top-0  text-white bg-secondary z-10 flex items-center ' >
+    <nav className='md:h-[112px] h-16 sticky top-0  text-white bg-secondary z-10 flex items-center ' >
       <div className="container flex justify-between">
         <div className="relative z-50 flex items-center w-full gap-7">
-          <Image src="/assets/Logo.png" alt="Logo" width={176} height={64}  />
+          <img src="/assets/Logo.png" alt="Logo" className='md:w-44 w-36' />
+          
+          {/* <Image src="/assets/Logo.png" alt="Logo" fill width={176}  height={64}  /> */}
 
           {/* Toggle */}
           <button 
@@ -113,10 +115,10 @@ const Navbar = () => {
         <div className={`fixed lg:static top-0 z-10 flex flex-col lg:justify-end items-center justify-center w-full h-screen gap-3 lg:flex-row lg:h-auto bg-secondary ${openNavbarLinks ? "left-0" : "-left-full"} transition-all duration-300`}>
           
           {/* Links in Mobile */}
-          <ul className="flex lg:hidden lg:flex-row flex-col items-center gap-3.5 lg:h-auto ">
+          <ul className="flex lg:hidden mt-8 lg:flex-row flex-col items-center md:gap-3.5 gap-2 lg:h-auto ">
             {
               allLinks.map(({ id, name, path, active }) => (
-                <li key={id} className={`p-1 ${active ? "text-primary border-b border-b-primary font-bold " : ""} text-lg `}>
+                <li key={id} className={`p-1 ${active ? "text-primary border-b border-b-primary font-bold " : ""} md:text-lg text-base`}>
                   <Link href={path}>{name}</Link>
                 </li>
               ))
