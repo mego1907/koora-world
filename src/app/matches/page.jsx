@@ -39,7 +39,7 @@ const AfterMatchSec = () => {
 
 const OverviewSec = () => {
   return (
-    <div>
+    <div className='flex flex-col gap-8'>
       <PlayerStats />
       {/* Banner */}
       <Banner />

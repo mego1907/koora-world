@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import MatchComposition from './MatchComposition';
+import MomentsOfTheGame from './MomentsOfTheGame';
+import MinuteByMinute from './MinuteByMinute';
 
 const MatchEventsSec = () => {
   const [selectedTab, setSelectedTab] = useState("the composition");
@@ -11,7 +13,7 @@ const MatchEventsSec = () => {
     },
     {
       nameAr: "أحداث المباراة",
-      name: "match events"
+      name: "moment of the match"
     },
     {
       nameAr: "التشكيل",
@@ -39,6 +41,8 @@ const MatchEventsSec = () => {
 
       {/* Composition */}
       {selectedTab === "the composition" && <MatchComposition />}
+      {selectedTab === "moment of the match" && <MomentsOfTheGame />}
+      {selectedTab === "minute by minute" && <MinuteByMinute />} 
     </div>
   )
 }
