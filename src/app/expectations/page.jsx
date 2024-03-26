@@ -5,10 +5,13 @@ import Link from "next/link";
 
 import { useState, useEffect } from "react";
 import { getItemFromLocalStorage } from "@/utils";
+import { useAppContext } from "@/contexts/AppContext";
 
 
 
 const Expectaions = () => {
+
+  const { userData } = useAppContext();
 
   const expectaions = [
     {
@@ -70,16 +73,10 @@ const Expectaions = () => {
   const [expectations, setExpectations] = useState([]);
 
 
-  const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // const localStorageUserData = localStorage && localStorage.getItem("user");
-  const localStorageUserData = getItemFromLocalStorage("user")
-
-  useEffect(() => {
-    setUserData(localStorageUserData)
-  }, [localStorageUserData])
 
   useEffect(() => {
     const fetchData = async () => {
