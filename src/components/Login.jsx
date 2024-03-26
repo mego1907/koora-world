@@ -27,7 +27,7 @@ const Login = ({ openLogin, setOpenLogin }) => {
 
       const data = await res.json();
       setUserData(data.data)
-      localStorage && localStorage.setItem("user", JSON.stringify(data.data));
+      window.localStorage && window.localStorage.setItem("user", JSON.stringify(data.data));
       setOpenLogin(false);
 
     } catch(err) {

@@ -27,7 +27,7 @@ const Register = ({ openRegister, setOpenRegister }) => {
 
     const data = await res.json();
     
-    localStorage && localStorage.setItem("user", JSON.stringify(data.data))
+    window.localStorage && window.localStorage.setItem("user", JSON.stringify(data.data))
   }
 
   return (

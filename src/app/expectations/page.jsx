@@ -73,7 +73,7 @@ const Expectaions = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const localStorageUserData = localStorage && localStorage.getItem("user");
+  const localStorageUserData = window.localStorage && window.localStorage.getItem("user");
 
   useEffect(() => {
     setUserData(localStorageUserData)

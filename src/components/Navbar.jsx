@@ -80,7 +80,8 @@ const Navbar = () => {
     })
 
     setUserData({});
-    localStorage.clear();
+
+    window.localStorage && window.localStorage.clear();
   }
 
 
