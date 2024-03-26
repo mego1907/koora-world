@@ -1,6 +1,7 @@
 import React from 'react'
 import Modal from './Modal'
 import { useAppContext } from '@/contexts/AppContext';
+import { setItemInLocalStorage } from '@/utils';
 
 const Register = ({ openRegister, setOpenRegister }) => {
   const { userData, setUserData } = useAppContext();
@@ -27,7 +28,8 @@ const Register = ({ openRegister, setOpenRegister }) => {
 
     const data = await res.json();
     
-    window.localStorage && window.localStorage.setItem("user", JSON.stringify(data.data))
+    // localStorage && localStorage.setItem("user", JSON.stringify(data.data))
+    setItemInLocalStorage("user", JSON.stringify(data.data));
   }
 
   return (

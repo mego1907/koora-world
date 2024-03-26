@@ -8,6 +8,7 @@ import Modal from './Modal';
 import Login from './Login';
 import Register from './Register';
 import { useAppContext } from '@/contexts/AppContext';
+import { clearLocalStorage } from '@/utils';
 
 
 
@@ -81,7 +82,8 @@ const Navbar = () => {
 
     setUserData({});
 
-    window.localStorage && window.localStorage.clear();
+    // localStorage && localStorage.clear();
+    clearLocalStorage();
   }
 
 

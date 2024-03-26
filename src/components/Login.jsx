@@ -2,6 +2,7 @@
 import React, { useRef } from 'react'
 import Modal from './Modal'
 import { useAppContext } from '@/contexts/AppContext';
+import { setItemInLocalStorage } from '@/utils';
 
 const Login = ({ openLogin, setOpenLogin }) => {
   const formRef = useRef(undefined);
@@ -27,7 +28,8 @@ const Login = ({ openLogin, setOpenLogin }) => {
 
       const data = await res.json();
       setUserData(data.data)
-      window.localStorage && window.localStorage.setItem("user", JSON.stringify(data.data));
+      setItemInLocalStorage("user", JSON.stringify(data.data))
+      // localStorage && localStorage.setItem("user", JSON.stringify(data.data));
       setOpenLogin(false);
 
     } catch(err) {

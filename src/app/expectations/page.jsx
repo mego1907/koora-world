@@ -4,6 +4,7 @@ import ChampionshipCard from "./_components/ChampionshipCard";
 import Link from "next/link";
 
 import { useState, useEffect } from "react";
+import { getItemFromLocalStorage } from "@/utils";
 
 
 
@@ -73,7 +74,8 @@ const Expectaions = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const localStorageUserData = window.localStorage && window.localStorage.getItem("user");
+  // const localStorageUserData = localStorage && localStorage.getItem("user");
+  const localStorageUserData = getItemFromLocalStorage("user")
 
   useEffect(() => {
     setUserData(localStorageUserData)

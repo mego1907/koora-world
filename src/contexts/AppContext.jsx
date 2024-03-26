@@ -1,12 +1,15 @@
 "use client";
+import { getItemFromLocalStorage } from "@/utils";
 import React, { useContext, useEffect, useState } from "react";
 
 const AppContext = React.createContext(undefined);
 
 export const AppContextProvider = ({ children }) => {
-  const [userData, setUserData] = useState(window.localStorage && JSON.parse(window.localStorage.getItem('user')));
+  // const [userData, setUserData] = useState(localStorage && JSON.parse(localStorage.getItem('user')));
+  const [userData, setUserData] = useState(JSON.parse(getItemFromLocalStorage("user")));
 
-  const user = window.localStorage && window.localStorage.getItem('user');
+  // const user = localStorage && localStorage.getItem('user');
+  const user = getItemFromLocalStorage("user");
 
   useEffect(() => {
     setUserData(JSON.parse(user))

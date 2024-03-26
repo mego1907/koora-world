@@ -71,18 +71,18 @@ const Profile = () => {
 
           <div className="flex flex-col gap-12 my-16">
             {/* Name */}
-            <div className="flex flex-col text-white gap-2 md:w-1/2 w-full items-center">
+            <div className="flex flex-col text-white gap-2 md:w-1/2 w-full items-center md:items-start">
               <h3 className="md:text-xl text-base font-semibold text-gray-300">الاسم</h3>
               <p className='md:text-2xl text-sm'>{profileData?.name}</p>
             </div>
 
             {/* Phone */}
-            <div className="flex flex-col text-white gap-2 md:w-1/2 w-full items-center">
+            <div className="flex flex-col text-white gap-2 md:w-1/2 w-full items-center md:items-start">
               <h3 className="md:text-xl text-base font-semibold text-gray-300">رقم الهاتف</h3>
               <p className='md:text-2xl text-sm'>{profileData?.phone}</p>
             </div>
 
-            <div className="flex text-white md:flex-row flex-col items-center md:gap-10 gap-5 md:w-1/2">
+            <div className="flex text-white md:flex-row flex-col items-center md:gap-10 gap-5 md:w-1/2 md:mb-5">
               <h3 className="md:text-xl text-base font-semibold text-gray-300">نوع الحزمة</h3>
               <div className='md:text-base text-sm text-white px-4 py-1 pb-2 bg-green-700 rounded-full'>{profileData?.package_name}</div>
             </div>
