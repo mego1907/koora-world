@@ -107,8 +107,12 @@ const Navbar = () => {
           <ul className="lg:flex hidden items-center gap-3.5 lg:h-auto z-10">
             {
               allLinks.map(({ id, name, path, active }) => (
-                <li key={id} className={`p-1 ${active ? "text-primary border-b border-b-primary font-bold " : ""} text-lg `}>
-                  <Link href={path}>{name}</Link>
+                <li 
+                  key={id} 
+                  
+                  className={`p-1 ${active ? "text-primary border-b border-b-primary font-bold " : ""} text-lg `}
+                >
+                  <Link href={path} >{name}</Link>
                 </li>
               ))
             }
@@ -121,8 +125,13 @@ const Navbar = () => {
           <ul className="flex lg:hidden mt-8 lg:flex-row flex-col items-center md:gap-3.5 gap-2 lg:h-auto ">
             {
               allLinks.map(({ id, name, path, active }) => (
-                <li key={id} className={`p-1 ${active ? "text-primary border-b border-b-primary font-bold " : ""} md:text-lg text-base`}>
-                  <Link href={path}>{name}</Link>
+                <li 
+                  key={id} 
+                  onClick={handleOpenNavbarLinks}
+                  className={`p-1 ${active ? "text-primary border-b border-b-primary font-bold " : ""} md:text-lg text-base`}>
+                  <Link href={path}>
+                    {name}
+                  </Link>
                 </li>
               ))
             }
@@ -132,26 +141,48 @@ const Navbar = () => {
             userData ? (
               <>
                 {/* Login */}
-                <Link href="/profile" className="flex gap-2 mt-8 text-base cursor-pointer lg:mt-0">
+                <Link 
+                  href="/profile" 
+                  className="flex gap-2 mt-8 text-base cursor-pointer lg:mt-0"
+                  onClick={handleOpenNavbarLinks}
+                >
                   <UserIcon className="" />
                   <span>الملف الشخصي</span>
                 </Link>
                 <span className='lg:h-5 lg:w-[1px] bg-primary'></span>
                 {/* Rgister */}
-                <button type='button' onClick={logout}>
+                <button 
+                  type='button' 
+                  onClick={() => {
+                    logout(); 
+                    handleOpenNavbarLinks(); 
+                  }}>
                   <span>تسجيل الخروج</span>
                 </button>
               </>
             ) : (
               <>
                 {/* Login */}
-                <button type='button' className="flex gap-2 mt-8 text-base cursor-pointer lg:mt-0" onClick={() => setOpenLogin(true)}>
+                <button 
+                  type='button' 
+                  className="flex gap-2 mt-8 text-base cursor-pointer lg:mt-0" 
+                  onClick={() => {
+                    setOpenLogin(true);
+                    handleOpenNavbarLinks();
+                  }}
+                >
                   <UserIcon className="" />
                   <span>تسجيل دخول</span>
                 </button>
                 <span className='lg:h-5 lg:w-[1px] bg-primary'></span>
                 {/* Rgister */}
-                <button type='button' onClick={() => setOpenRegister(true)}>
+                <button 
+                  type='button' 
+                  onClick={() => {
+                    setOpenRegister(true);
+                    handleOpenNavbarLinks();
+                  }}
+                >
                   <span>تسجيل جديد</span>
                 </button>
               </>

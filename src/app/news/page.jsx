@@ -43,9 +43,9 @@ const News = () => {
   return (
     <div>
       <div className="container">
-        <h3 className='pb-5 text-4xl font-medium text-white pt-9'>الأخبار</h3>
+        <h3 className='pb-5 md:text-4xl text-2xl font-medium text-white md:pt-9 pt-5'>الأخبار</h3>
 
-        <div className='grid grid-cols-3 gap-5 py-5'>
+        <div className='grid md:grid-cols-3 grid-cols-1 gap-5 py-5'>
           {
             newsData.map(({ image, title, id, type_string }) => {
               return (

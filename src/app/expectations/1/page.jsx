@@ -24,7 +24,7 @@ const SingleExpectation = () => {
   return (
     <div>
       {/* Tabs */}
-      <div className="flex justify-between gap-4 text-[32px] text-white py-2">
+      <div className="flex justify-between gap-4 md:text-[32px] text-white py-2">
         {
           tabs.map((tab, i) => (
             <button

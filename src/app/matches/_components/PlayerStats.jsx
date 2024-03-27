@@ -4,7 +4,7 @@ import React from 'react'
 const PlayerStats = () => {
   return (
     <div>      
-      <h3 className="py-5 font-medium text-white text-[32px]">احصائيات الاعبين</h3>
+      <h3 className="py-5 font-medium text-white md:text-[32px] text-base">احصائيات الاعبين</h3>
       <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
         <PlayerStatsCard />
         <PlayerStatsCard />

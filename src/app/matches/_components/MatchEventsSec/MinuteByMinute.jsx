@@ -10,7 +10,7 @@ const MinuteByMinute = () => {
 
           <div className='bg-slate-200 w-full p-2'>
             <h3>ضربة جزاء</h3>
-            <div className='flex items-center gap-8 p-2'>
+            <div className='flex md:flex-row flex-col items-center gap-8 p-2'>
               <PenaltyIcon />
               <div>
                 <img src="/assets/Ellipse 4.png" className="w-10 h-10 rounded-full" alt="" />
@@ -35,7 +35,7 @@ const MinuteByMinute = () => {
 
           <div className='bg-slate-200 w-full p-2'>
             <h3>ضربة جزاء</h3>
-            <div className='flex items-center gap-8 p-2'>
+            <div className='flex md:flex-row flex-col items-center gap-8 p-2'>
               <PenaltyIcon />
               <div>
                 <img src="/assets/Ellipse 4.png" className="w-10 h-10 rounded-full" alt="" />
@@ -60,7 +60,7 @@ const MinuteByMinute = () => {
 
           <div className='bg-slate-200 w-full p-2'>
             <h3>ضربة جزاء</h3>
-            <div className='flex items-center gap-8 p-2'>
+            <div className='flex md:flex-row flex-col items-center gap-8 p-2'>
               <PenaltyIcon />
               <div>
                 <img src="/assets/Ellipse 4.png" className="w-10 h-10 rounded-full" alt="" />
@@ -85,7 +85,7 @@ const MinuteByMinute = () => {
 
           <div className='bg-slate-200 w-full p-2'>
             <h3>ضربة جزاء</h3>
-            <div className='flex items-center gap-8 p-2'>
+            <div className='flex md:flex-row flex-col items-center gap-8 p-2'>
               <PenaltyIcon />
               <div>
                 <img src="/assets/Ellipse 4.png" className="w-10 h-10 rounded-full" alt="" />
@@ -111,7 +111,7 @@ const MinuteByMinute = () => {
 
           <div className='bg-slate-200 w-full p-2'>
             <h3>ضربة جزاء</h3>
-            <div className='flex items-center gap-8 p-2'>
+            <div className='flex md:flex-row flex-col items-center gap-8 p-2'>
               <PenaltyIcon />
               <div>
                 <img src="/assets/Ellipse 4.png" className="w-10 h-10 rounded-full" alt="" />
@@ -136,7 +136,7 @@ const MinuteByMinute = () => {
 
           <div className='bg-slate-200 w-full p-2'>
             <h3>ضربة جزاء</h3>
-            <div className='flex items-center gap-8 p-2'>
+            <div className='flex md:flex-row flex-col items-center gap-8 p-2'>
               <PenaltyIcon />
               <div>
                 <img src="/assets/Ellipse 4.png" className="w-10 h-10 rounded-full" alt="" />
@@ -161,7 +161,7 @@ const MinuteByMinute = () => {
 
           <div className='bg-slate-200 w-full p-2'>
             <h3>ضربة جزاء</h3>
-            <div className='flex items-center gap-8 p-2'>
+            <div className='flex md:flex-row flex-col items-center gap-8 p-2'>
               <PenaltyIcon />
               <div>
                 <img src="/assets/Ellipse 4.png" className="w-10 h-10 rounded-full" alt="" />
