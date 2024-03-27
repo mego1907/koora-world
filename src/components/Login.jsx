@@ -52,7 +52,7 @@ const Login = ({ openLogin, setOpenLogin }) => {
 
       <h3 className="mb-5 text-2xl font-bold text-center">تسجيل الدخول</h3>
 
-      <div className="flex flex-col justify-center w-8/12 gap-3 mx-auto">
+      <div className="flex flex-col justify-center md:w-8/12 w-full gap-3 mx-auto">
         <form onSubmit={handleSubmit} ref={formRef}>
           <div className="flex flex-col gap-2">
             <label 

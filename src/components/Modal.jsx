@@ -12,7 +12,7 @@ const Modal = ({ children, open, setOpen, title = "تسجيل الدخول" }) =
 
 
 
-      <div className={`fixed z-30 w-5/12 p-2 -translate-x-1/2 ${open ? "-translate-y-1/2 top-1/2 opacity-100" : "-top-[200%] opacity-0 -translate-y-screen"}  bg-[#306ba5] rounded-md shadow-md  left-1/2 transition-all`}>
+      <div className={`fixed z-50 md:w-5/12 w-full p-2 -translate-x-1/2 ${open ? "-translate-y-1/2 top-1/2 opacity-100" : "-top-[200%] opacity-0 -translate-y-screen"}  bg-[#306ba5] rounded-md shadow-md  left-1/2 transition-all`}>
 
         <div className="p-4">
           {children}
