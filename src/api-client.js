@@ -1,5 +1,24 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+const headersFn = (token = false) => {
+  if(token) {
+    return {
+      "Authorization": "Bearer " + token,
+      "Accept": "*/*",
+      "Access-Control-Allow-Origin": "*",
+      "currency": "kwd",
+      "Accept": "application/json"    
+    }
+  }
+
+  return {
+    "Accept": "*/*",
+    "Access-Control-Allow-Origin": "*",
+    "currency": "kwd",
+    "Accept": "application/json"  
+  }
+}
+
 export const fetchHomeData = async () => {
   const response = await fetch(`${API_BASE_URL}/Home/`);
 
@@ -13,9 +32,7 @@ export const fetchHomeData = async () => {
 export const fetchExpectationsData = async (token) => {
   const response = await fetch(`${API_BASE_URL}/Client/Expectations/GetAllExpectations`, {
     method: "GET",
-    headers: {
-      "Authorization": "Bearer " + token,
-    },
+    headers: headersFn(token),
   });
 
   if (!response.ok) {
@@ -28,9 +45,7 @@ export const fetchExpectationsData = async (token) => {
 export const fetchSingleExpectationData = async (token, id) => {
   const response = await fetch(`${API_BASE_URL}/Client/Expectations/ExpectationsDetails/${id}`, {
     method: "GET",
-    headers: {
-      "Authorization": "Bearer " + token,
-    },
+    headers: headersFn(token),
   })
 
   if (!response.ok) {
@@ -45,13 +60,7 @@ export const fetchMatchesData = async () => {}
 export const fetchCompetitionsData = async (token) => {
   const response = await fetch(`${API_BASE_URL}/Client/Contest/GetAllContest`, {
     method: "GET",
-    headers: {
-      "Authorization": "Bearer " + token,
-      "Accept": "*/*",
-      "Access-Control-Allow-Origin": "*",
-      "currency": "kwd",
-      "Accept": "application/json"
-    }
+    headers: headersFn(token)
   })
 
   if(!response.ok) {
@@ -64,13 +73,7 @@ export const fetchCompetitionsData = async (token) => {
 export const fetchCompetitionDetails = async (token, id) => {
   const response = await fetch(`${API_BASE_URL}/Client/Contest/ContestDetails/${id}`, {
     method: "GET",
-    headers: {
-      "Authorization": "Bearer " + token,
-      "Accept": "*/*",
-      "Access-Control-Allow-Origin": "*",
-      "currency": "kwd",
-      "Accept": "application/json"
-    }
+    headers: headersFn(token)
   })
 
   if (!response.ok) {
@@ -86,7 +89,8 @@ export const fetchNewsData = async () => {
 
   const response = await fetch(`${API_BASE_URL}/Home/News`, {
     method: "POST",
-    body: formData
+    body: formData,
+    headers: headersFn(),
   });
 
   if (!response.ok) {
@@ -102,7 +106,8 @@ export const fetchSingleNew = async (newId) => {
 
   const response = await fetch(`${API_BASE_URL}/Home/NewsDetails`, {
     method: "POST",
-    body: formData
+    body: formData,
+    headers: headersFn(),
   })
 
   if(!response.ok) {
@@ -118,7 +123,8 @@ export const fetchVideosData = async () => {
 
   const response = await fetch(`${API_BASE_URL}/Home/News`, {
     method: "POST",
-    body: formData
+    body: formData,
+    headers: headersFn(),
   });
 
   if (!response.ok) {
@@ -134,7 +140,8 @@ export const fetchSingleVideoData = async (videoId) => {
 
   const response = await fetch(`${API_BASE_URL}/Home/NewsDetails`, {
     method: "POST",
-    body: formData
+    body: formData,
+    headers: headersFn(),
   })
 
   if (!response.ok) {
@@ -150,7 +157,8 @@ export const fetchImagesData = async (type) => {
 
   const response = await fetch(`${API_BASE_URL}/Home/News`, {
     method: "POST",
-    body: formData
+    body: formData,
+    headers: headersFn(),
   });
 
   if(!response.ok) {
@@ -166,7 +174,8 @@ export const fetchSingleImageData = async (imageId) => {
 
   const response = await fetch(`${API_BASE_URL}/Home/NewsDetails`, {
     method: "POST",
-    body: formData
+    body: formData,
+    headers: headersFn(),
   })
 
   if (!response.ok) {
@@ -179,13 +188,7 @@ export const fetchSingleImageData = async (imageId) => {
 export const fetchProfileData = async (token) => {
   const response = await fetch(`${API_BASE_URL}/Client/profile/current_info`, {
     method: "GET",
-    headers: {
-      "Authorization": "Bearer " + token,
-      "Accept": "*/*",
-      "Access-Control-Allow-Origin": "*",
-      "currency": "kwd",
-      "Accept": "application/json"
-    }
+    headers: headersFn(token)
   });
 
   if(!response.ok) {
