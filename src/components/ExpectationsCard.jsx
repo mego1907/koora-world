@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from "next/image"
 
 const ExpectationsCard = ({ league, teams }) => {
+  const [expectResult, setExpectResult] = useState(false);
+
   return (
     <div className='w-full h-full p-5 bg-[#024054]'>
       <div className="flex flex-col items-center gap-5">
@@ -26,9 +28,25 @@ const ExpectationsCard = ({ league, teams }) => {
           </div>
         </div>
 
-        <button type="button" className="flex items-center justify-center h-8 w-[194px] leading-5 text-white bg-transparent border border-white rounded-full">
-          <span className='mb-1'>توقع النتيجة</span>
-        </button>
+        {
+          expectResult ? (
+            <div className="flex w-full flex-col gap-4">
+              <div className="flex justify-between w-full text-white">
+                <input type="text" className='bg-transparent border outline-none w-20 py-1 rounded-sm text-center' />
+                <input type="text" className='bg-transparent border outline-none w-20 py-1 rounded-sm text-center' />
+
+              </div>
+              <button className='text-white border px-4 py-1 rounded-md'>تأكيد</button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setExpectResult(true)}
+              type="button"
+              className="flex items-center justify-center h-8 w-[194px] leading-5 text-white bg-transparent border border-white rounded-full">
+              <span className='mb-1'>توقع النتيجة</span>
+            </button>
+          )
+        }
       </div>
     </div>
   )

@@ -2,8 +2,6 @@ import React from 'react'
 import MatchExpectation from './MatchExpectation'
 
 const MatchesSection = () => {
-
-
   return (
     <div>
       <div className="container m-auto">
