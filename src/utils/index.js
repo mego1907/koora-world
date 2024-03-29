@@ -1,25 +1,25 @@
 
 
 export const getItemFromLocalStorage = (key) => {
-  // if(typeof global?.window !== "undefined") {
+  if(typeof global?.window !== "undefined") {
     return JSON.parse(localStorage.getItem(key))
-  // } 
+  } 
   
-  // return;
+  return;
 }
 
 export const setItemInLocalStorage = (key, value) => {
-  // if(typeof global?.window !== "undefined") {
+  if(typeof global?.window !== "undefined") {
     localStorage.setItem(key, value)
-  // }
+  }
 
-  // return;
+  return;
 }
 
 export const clearLocalStorage = () => {
-  // if(typeof global?.window !== "undefined") {
+  if(typeof global?.window !== "undefined") {
     localStorage.clear();
-  // }
+  }
 
-  // return;
+  return;
 }

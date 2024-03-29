@@ -66,6 +66,10 @@ export const fetchCompetitionDetails = async (token, id) => {
     method: "GET",
     headers: {
       "Authorization": "Bearer " + token,
+      "Accept": "*/*",
+      "Access-Control-Allow-Origin": "*",
+      "currency": "kwd",
+      "Accept": "application/json"
     }
   })
 
