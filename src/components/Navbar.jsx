@@ -71,20 +71,20 @@ const Navbar = () => {
     setOpenNavbarLinks(!openNavbarLinks);
   }
 
-
   const logout = () => {
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/logout`, {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + userData.token
-      }
-    })
-
     setUserData({});
-
-    // localStorage && localStorage.clear();
     clearLocalStorage();
+
+    // fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/logout`, {
+    //   method: "GET",
+    //   headers: {
+    //     "Authorization": "Bearer " + userData.token
+    //   }
+    // })
+
+
   }
+
 
 
   return (
@@ -138,7 +138,7 @@ const Navbar = () => {
           </ul>
 
           {
-            userData ? (
+            userData?.token ? (
               <>
                 {/* Login */}
                 <Link 

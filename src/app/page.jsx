@@ -5,16 +5,15 @@ import ExpectationsCard from '@/components/ExpectationsCard'
 import Header from '@/components/Header'
 import LoadingSpinner from '@/components/LoadingSpinner';
 import SectionTitle from '@/components/SectionTitle'
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-
+import { useQuery } from "@tanstack/react-query";
+import * as apiClient from "../api-client";
 
 export default function Home() {
-  const path = usePathname();
-  const [homeData, setHomeData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const { data: homeData, isLoading } = useQuery({ 
+    queryKey: ["fetchHomeData"], 
+    queryFn: apiClient.fetchHomeData
+  });
 
   const allExpectations = [
     {
@@ -64,11 +63,6 @@ export default function Home() {
     }
   ];
 
-  const allImagesData = [
-    {
-
-    }
-  ]
 
   const allMatchesData = [
     {
@@ -118,31 +112,14 @@ export default function Home() {
     }
   ]
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try{
-        setLoading(true);
-        const res = await fetch(`https://kooora-world.com/api/Home/`);
-        const data = await res.json();
-        setHomeData(data.data);
-        setLoading(false);
-      } catch(err) {
-        setLoading(false);
-        setError(err.message);
-      }
-    };
 
-    fetchData()
-  }, [])
-
-
-  if(loading) {
+  if(isLoading) {
     return <LoadingSpinner />
   }
 
   return (
     <main className="">
-      <Header sliderData={homeData?.slider} />
+      <Header sliderData={homeData?.data?.slider} />
 
       {/* Result expectations */}
       <div className="container flex flex-col">
@@ -165,7 +142,7 @@ export default function Home() {
 
         <div className="flex flex-col gap-5 lg:flex-row">
           {
-            homeData.news?.slice(0, 3)?.map((item, i) => (
+            homeData?.data?.news?.slice(0, 3)?.map((item, i) => (
               <div className="w-full lg:w-1/3" key={i} >
                 <DefaultCard {...item}/>
               </div>
@@ -198,7 +175,7 @@ export default function Home() {
 
         <div className="flex flex-col gap-5 lg:flex-row">
           {
-            homeData.video?.slice(0, 3)?.map((item, i) => (
+            homeData?.data?.video?.slice(0, 3)?.map((item, i) => (
               <div className="w-full lg:w-1/3" key={i}>
                 <DefaultCard {...item} />
               </div>
@@ -213,7 +190,7 @@ export default function Home() {
 
         <div className="flex flex-col gap-5 lg:flex-row">
           {
-            homeData?.image?.slice(0, 3).map((item, i) => (
+            homeData?.data?.image?.slice(0, 3).map((item, i) => (
               <div className="w-full lg:w-1/3" key={i}>
                 <DefaultCard {...item} />
               </div>

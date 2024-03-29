@@ -4,133 +4,20 @@ import ChampionshipCard from './_components/ChampionshipCard';
 import { instance } from '@/services/axios';
 import { useAppContext } from '@/contexts/AppContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import Link from "next/link"
+import Link from "next/link";
+import * as apiClient from "../../api-client";
+import { useQuery } from "@tanstack/react-query";
 
-// const competitions = [
-//   {
-//     id: 1,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "بطوية الأبطال"
-//   },
-//   {
-//     id: 2,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "دوري الأبطال"
-//   },
-//   {
-//     id: 3,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "بطوية الأبطال"
-//   },
-//   {
-//     id: 4,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "دوري الأبطال"
-//   },
-//   {
-//     id: 5,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "بطوية الأبطال"
-//   },
-//   {
-//     id: 6,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "دوري الأبطال"
-//   },
-//   {
-//     id: 7,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "بطوية الأبطال"
-//   },
-//   {
-//     id: 8,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "دوري الأبطال"
-//   },
-//   {
-//     id: 9,
-//     fromDay: "2023-11-13",
-//     toDay: "2023-11-17",
-//     championship: "دوري الأبطال"
-//   },
-// ]
-
-
-
-// useEffect(() => {
-//   const fetchData = async () => {
-//     try {
-//       setLoading(true);
-//       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/Client/Contest/GetAllContest`, {
-//         method: "GET",
-//         headers: {
-//           "Authorization": "Bearer " + userData.token,
-//           "Accept": "*/*",
-//           "Access-Control-Allow-Origin": "*",
-//           "currency": "kwd",
-//           "Accept": "application/json"
-//         }
-//       });
-
-//       const data = await res.json();
-
-//       setCompetitions(data.data.items);
-//       setLoading(false);
-//     } catch (err) {
-//       setLoading(false);
-//       setError(err.message);
-//     }
-//   };
-
-//   fetchData()
-// }, [userData])
 
 const Competitions = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [competitions, setCompetitions] = useState([])
+  const { userData } = useAppContext();
 
-  const { userData, setUserData } = useAppContext();
-  
-  useEffect(() => {
-    const fetchCompetitionsData = async () => {
+  const { data: competitions, isLoading } = useQuery({
+    queryKey: ["fetchCompetitionsData"],
+    queryFn: () => apiClient.fetchCompetitionsData(userData?.token)
+  })
 
-      setLoading(true);
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/Client/Contest/GetAllContest`, {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + userData?.token,
-          "Accept": "*/*",
-          "Access-Control-Allow-Origin": "*",
-          "currency": "kwd",
-          "Accept": "application/json"
-        }
-      })
-
-      const resBody = await res.json();
-      setLoading(false)
-
-      if(resBody.status === 401) {
-        setUserData({})
-      }
-
-      setCompetitions(resBody.data.items)
-
-      console.log("resBody:", resBody.data.items )
-    };
-
-    fetchCompetitionsData();
-  }, [userData, setUserData])
-
-  if(loading) {
+  if(isLoading) {
     return <LoadingSpinner />
   }
 
@@ -141,7 +28,7 @@ const Competitions = () => {
 
         <div>
           <div className="flex flex-wrap mb-5">
-            {competitions.map((item, i) => (
+            {competitions?.data?.items?.map((item, i) => (
               <Link href={`/competitions/${item.id}`} key={i} className="w-full px-2 md:w-1/3">
                 <div>
                   <ChampionshipCard {...item} />

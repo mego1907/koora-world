@@ -1,53 +1,16 @@
 "use client";
-import { useState, useEffect } from 'react';
 import Image from "next/image";
-import { instance } from "@/services/axios";
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { useAppContext } from '@/contexts/AppContext';
+import { useQuery } from "@tanstack/react-query";
+import * as apiClient from "../../api-client";
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { userData } = useAppContext();
 
-  const { userData, setUserData } = useAppContext();
+  const { data, isLoading } = useQuery({ queryKey: ["fetchProfileData"], queryFn: () => apiClient.fetchProfileData(userData.token) })
 
-  useEffect(() => {
-
-    const getData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        setProfileData([]);
-
-        const res = await fetch("https://kooora-world.com/api/Client/profile/current_info", {
-          method: "GET",
-          headers: {
-            "Authorization": "Bearer " + userData.token,
-            "Accept": "*/*",
-            "Access-Control-Allow-Origin": "*",
-            "currency": "kwd",
-            "Accept": "application/json"
-          }
-        });
-
-        const resBody = await res.json();
-
-        setProfileData(resBody.data)
-        setLoading(false);
-
-        console.log("resBody.data :", resBody.data)
-
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    }
-
-    getData();
-  }, [userData]);
-
-  if (loading) {
+  if (isLoading) {
     return <LoadingSpinner />
   }
 
@@ -73,18 +36,18 @@ const Profile = () => {
             {/* Name */}
             <div className="flex flex-col text-white gap-2 md:w-1/2 w-full items-center md:items-start">
               <h3 className="md:text-xl text-base font-semibold text-gray-300">الاسم</h3>
-              <p className='md:text-2xl text-sm'>{profileData?.name}</p>
+              <p className='md:text-2xl text-sm'>{data?.data?.name}</p>
             </div>
 
             {/* Phone */}
             <div className="flex flex-col text-white gap-2 md:w-1/2 w-full items-center md:items-start">
               <h3 className="md:text-xl text-base font-semibold text-gray-300">رقم الهاتف</h3>
-              <p className='md:text-2xl text-sm'>{profileData?.phone}</p>
+              <p className='md:text-2xl text-sm'>{data?.data?.phone}</p>
             </div>
 
             <div className="flex text-white md:flex-row flex-col items-center md:gap-10 gap-5 md:w-1/2 md:mb-5">
               <h3 className="md:text-xl text-base font-semibold text-gray-300">نوع الحزمة</h3>
-              <div className='md:text-base text-sm text-white px-4 py-1 pb-2 bg-green-700 rounded-full'>{profileData?.package_name}</div>
+              <div className='md:text-base text-sm text-white px-4 py-1 pb-2 bg-green-700 rounded-full'>{data?.data?.package_name}</div>
             </div>
           </div>
         </div>

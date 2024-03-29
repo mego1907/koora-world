@@ -2,8 +2,22 @@
 import React, { useState } from 'react'
 import MatchesSection from '../_components/MatchesSection';
 import DescriptionSection from '../_components/DescriptionSection';
+import { useQuery } from "@tanstack/react-query";
+import * as apiClient from "../../../api-client";
+import { useParams } from 'next/navigation';
+import { useAppContext } from '@/contexts/AppContext';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const SingleExpectation = () => {
+  const { id } = useParams();
+  const { userData } = useAppContext();
+
+  const { data, isLoading } = useQuery({ queryKey: ["fetchSingleExpectationData"], queryFn: () => apiClient.fetchSingleExpectationData(userData.token, id)  })
+
+
+  console.log("Data :", data);
+
+
   const [selectedTab, setSelectedTab] = useState("matches")
   
   const tabs = [
@@ -20,6 +34,11 @@ const SingleExpectation = () => {
       name: "prizzes"
     }
   ]
+
+
+  if(isLoading) {
+    return <LoadingSpinner />
+  }
 
   return (
     <div>

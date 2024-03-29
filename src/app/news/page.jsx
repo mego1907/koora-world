@@ -1,41 +1,14 @@
 "use client";
 import DefaultCard from '@/components/DefaultCard'
 import LoadingSpinner from '@/components/LoadingSpinner';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useQuery } from "@tanstack/react-query";
+import * as apiClient from "../../api-client";
 
 const News = () => {
-  const [newsData, setNewsData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { data, isLoading } = useQuery({ queryKey: ["fetchNewsData"], queryFn: apiClient.fetchNewsData });
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const formData = new FormData();
-        formData.append("type", 1)
-
-        const res = await fetch(`https://kooora-world.com/api/Home/News`, {
-          method: "POST",
-          body: formData
-        });
-        const data = await res.json();
-
-        console.log("data.data :", data.data.items);
-
-        setNewsData(data.data.items);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        setError(err.message);
-      }
-    };
-
-    fetchData()
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return <LoadingSpinner />
   }
 
@@ -47,7 +20,7 @@ const News = () => {
 
         <div className='grid md:grid-cols-3 grid-cols-1 gap-5 py-5'>
           {
-            newsData.map(({ image, title, id, type_string }) => {
+            data?.data?.items?.map(({ image, title, id, type_string }) => {
               return (
                 <DefaultCard image={image} title={title} id={id} key={id} type_string={type_string} />
               )

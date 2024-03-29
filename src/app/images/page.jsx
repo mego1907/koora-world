@@ -2,43 +2,15 @@
 import DefaultCard from '@/components/DefaultCard'
 import LoadingSpinner from '@/components/LoadingSpinner';
 import React, { useEffect, useState } from 'react'
+import { useQuery } from "@tanstack/react-query";
+import * as apiClient from "../../api-client";
 
 const Images = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [imagesData, setImagesData] = useState([])
+  const { data, isLoading } = useQuery({ queryKey: 'fetchImagesData', queryFn: apiClient.fetchImagesData })
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const formData = new FormData();
-        formData.append("type", 2)
-
-        setLoading(true);
-        const res = await fetch(`https://kooora-world.com/api/Home/News`, {
-          method: "POST",
-          body: formData
-        });
-        const data = await res.json();
-
-        console.log("data.data :", data.data.items);
-
-        setImagesData(data.data.items);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        setError(err.message);
-      }
-    };
-
-    fetchData()
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return <LoadingSpinner />
   }
-
 
   return (
     <div>
@@ -47,7 +19,7 @@ const Images = () => {
         
         <div className='grid md:grid-cols-3 grid-cols-1 gap-5 py-5'>
           {
-            imagesData.map((item) => (
+            data?.data?.items.map((item) => (
               <DefaultCard {...item} key={item.id} />
             ))
           }

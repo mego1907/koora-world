@@ -5,19 +5,15 @@ import React, { useContext, useEffect, useState } from "react";
 const AppContext = React.createContext(undefined);
 
 export const AppContextProvider = ({ children }) => {
-  // const [userData, setUserData] = useState(localStorage && JSON.parse(localStorage.getItem('user')));
-  const [userData, setUserData] = useState(getItemFromLocalStorage("user"));
-
-  // const user = localStorage && localStorage.getItem('user');
   const user = getItemFromLocalStorage("user");
-
+  const [userData, setUserData] = useState(user);
 
 
   return(
     <AppContext.Provider
       value={{
-        userData: userData,
-        setUserData: setUserData
+        userData,
+        setUserData
       }}
     >
       {children}

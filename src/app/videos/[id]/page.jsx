@@ -1,44 +1,34 @@
 "use client";
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { useParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
-const SingleVideoDetails = () => {
-  const [singleVideoData, setSingleVideoData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+import { useQuery } from "@tanstack/react-query";
+import * as apiClient from "../../../api-client";
 
+const SingleVideoDetails = () => {
   const { id } = useParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const formData = new FormData();
-        formData.append("news_id", id)
+  const { data, isLoading } = useQuery({ 
+    queryKey: ["fetchSingleVideoData"], 
+    queryFn: () => apiClient.fetchSingleVideoData(id) 
+  });
 
-        setLoading(true);
-        const res = await fetch(`https://kooora-world.com/api/Home/NewsDetails`, {
-          method: "POST",
-          body: formData
-        });
-        const data = await res.json();
-
-        console.log("data.data :", data.data);
-
-        setSingleVideoData(data.data);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        setError(err.message);
-      }
-    };
-
-    fetchData()
-  }, [id])
+  if(isLoading) {
+    return <LoadingSpinner />
+  }
 
   return (
     <div>
       <div className="container">
+        <h3 className="text-white">{data?.data?.title}</h3>
 
+        {/* Video */}
+        <a href={data?.data?.link} target="_blank">
+          <div>
+            <img src={data?.data?.image} alt={data?.data?.title} />
+          </div>
+        </a>
       </div>
     </div>
   )

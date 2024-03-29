@@ -7,11 +7,16 @@ import { useState, useEffect } from "react";
 import { getItemFromLocalStorage } from "@/utils";
 import { useAppContext } from "@/contexts/AppContext";
 
-
+import { useQuery } from "@tanstack/react-query";
+import * as apiClient from "../../api-client";
 
 const Expectaions = () => {
-
   const { userData } = useAppContext();
+
+  const { data, isLoading } = useQuery({ 
+    queryKey: ["fetchExpectationsData"], 
+    queryFn: () => apiClient.fetchExpectationsData(userData?.token) 
+  })
 
   const expectaions = [
     {
@@ -70,57 +75,8 @@ const Expectaions = () => {
     },
   ]
 
-  const [expectations, setExpectations] = useState([]);
 
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  // const localStorageUserData = localStorage && localStorage.getItem("user");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/Client/Expectations/GetAllExpectations`, {
-          method: "GET",
-          headers: {
-            "Authorization": "Bearer " + userData.token,
-          }
-        });
-
-        const data = await res.json();
-
-        setExpectations(data.data.items);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        setError(err.message);
-      }
-    };
-
-    fetchData()
-  }, [userData])
-
-  // useEffect(() => {
-
-  //   const getExpectaions = async () => {
-  //     const res = await fetch("https://kooora-world.com/api/Client/Expectations/GetAllExpectations", {
-  //       method: "GET",
-  //       headers: {
-  //         "Authorization": "Bearer " + userData.token
-  //       }
-  //     });
-
-  //     const data = await res.json();
-  //     console.log(data)
-  //   }
-
-  //   getExpectaions();
-
-  // }, [userData])
-
-  if (loading) {
+  if (isLoading) {
     return <LoadingSpinner />
   }
 
@@ -132,9 +88,9 @@ const Expectaions = () => {
 
         <div>
           <div className="flex flex-wrap mb-5">
-            {expectaions.map((item, i) => (
+            {data?.data?.items.map((item, i) => (
               <div className="w-full px-2 md:w-1/3" key={i}>
-                <Link href="/expectations/1">
+                <Link href={`/expectations/${item.id}`}>
                   <ChampionshipCard {...item} />
                 </Link>
               </div>
