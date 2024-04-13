@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
 import Image from "next/image";
+import { useMutation } from '@tanstack/react-query';
+import * as expectationsApi from "../../../APIs/7-Expectations-Api"
+import { useForm } from 'react-hook-form';
+import { useAppContext } from '@/contexts/AppContext';
+import { LiaSpinnerSolid } from 'react-icons/lia';
 
 const MatchExpectation = () => {
   const [expectResult, setExpectResult] = useState(false);
+  const { userData, showToast } = useAppContext();
+
+  const { register, formState: { errors }, handleSubmit } = useForm()
+
+  const mutation = useMutation({
+    mutationFn: expectationsApi.predictTheExpectation,
+    onSuccess: (data) => {
+      showToast({ type: "SUCCESS", message: data?.message })
+    }
+  })
 
   const teams = [
     {
@@ -14,6 +29,17 @@ const MatchExpectation = () => {
       logo: "/assets/barcelona.png"
     }
   ]
+
+  const expectTheResult = (data) => {
+
+    if (data.input1 && data.input2) {
+      const formData = new FormData();
+      formData.append("input1", data.input1)
+      formData.append("input2", data.input2)
+      
+      mutation.mutate(userData.token, formData)
+    }
+  }
 
   return (
     <div className='w-full h-full p-5 bg-[#024054]'>
@@ -41,19 +67,44 @@ const MatchExpectation = () => {
 
         {
           expectResult ? (
-            <div className="flex w-full flex-col gap-4">
+            <form onSubmit={handleSubmit(expectTheResult)} className="flex flex-col w-full gap-4">
               <div className="flex justify-between w-full text-white">
-                <input type="text" className='bg-transparent border outline-none w-20 py-1 rounded-sm text-center' />
-                <input type="text" className='bg-transparent border outline-none w-20 py-1 rounded-sm text-center' />
+                <div>
+                  <input
+                    type="text"
+                    className={`w-20 py-1 text-center bg-transparent border rounded-sm outline-none ${errors.input1 ? "border-red-400" : ""}`}
+                    name="input1"
+                    {...register("input1", { required: "هذا الحقل مطلوب" })}
+                  />
+                  {errors.input1 && <p className="mt-1 text-[10px] font-semibold text-red-400">{errors.input1.message}</p>}
+                </div>
+                <div>
+                  <input 
+                    type="text" 
+                    className={`w-20 py-1 text-center bg-transparent border rounded-sm outline-none ${errors.input2 ? "border-red-400" : ""}`}
+                    name="input2"
+                    {...register("input2", { required: "هذا الحقل مطلوب" })}
+                  />
+                  {errors.input2 && <p className="mt-1 text-[10px] font-semibold text-red-400">{errors.input2.message}</p>}
+                </div>
 
               </div>
-              <button className='text-white border px-4 py-1 rounded-md'>تأكيد</button>
-            </div>
+              <button 
+                className='flex items-center justify-center gap-2 px-4 py-1 text-white border rounded-md disabled:opacity-70' 
+                onClick={expectTheResult}
+                type='submit'
+                disabled={errors.input2 && errors.input2}
+              >
+                تأكيد
+                {mutation?.isPending && <LiaSpinnerSolid className='animate-spin' />}
+              </button>
+            </form>
           ) : (
             <button 
-                onClick={() => setExpectResult(true)}
-            type="button" 
-            className="flex items-center justify-center h-8 w-[194px] leading-5 text-white bg-transparent border border-white rounded-full">
+              onClick={() => setExpectResult(true)}
+              type="button" 
+              className="flex items-center justify-center h-8 w-[194px] leading-5 text-white bg-transparent border border-white rounded-full"
+            >
               <span className='mb-1'>توقع النتيجة</span>
             </button>
           )

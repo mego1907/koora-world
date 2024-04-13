@@ -4,11 +4,19 @@ import Image from "next/image"
 import AfterMatchSec from '../_components/AfterMatchSec';
 import MatchEventsSec from '../_components/MatchEventsSec/MatchEventsSec';
 import OverViewSec from './_components/OverViewSec';
+import * as matchesApi from "../../../APIs/5-matches-Api"
+import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 
 
 
 const MatchDetails = () => {
+  const { id } = useParams();
   const [selectedTab, setSelectedTab] = useState("after match");
+
+  const { data, isLoading } = useQuery({
+    queryFn: () => matchesApi.fetchMatchDetails(id)
+  })
 
   const matchData = {
     league: "الدوري الاسباني",
@@ -49,9 +57,9 @@ const MatchDetails = () => {
           className="flex items-center-justify-center md:h-[256px] relative"
           style={{ backgroundImage: 'linear-gradient(to left, #025005, #588B46)' }}
         >
-          <div className="flex flex-col items-center justify-center md:w-1/2 w-full md:gap-3 gap-2 m-auto">
+          <div className="flex flex-col items-center justify-center w-full gap-2 m-auto md:w-1/2 md:gap-3">
             <h3 className="text-center text-white md:text-[32px] text-lg">{matchData.league}</h3>
-            <p className='flex items-center justify-center gap-2 mb-8 md:text-2xl text-base text-center text-white'>
+            <p className='flex items-center justify-center gap-2 mb-8 text-base text-center text-white md:text-2xl'>
               <span>الثلاثاء ، 7 فبراير</span>
               <span className="text-[#f8e500] leading-5">21 : 00</span>
             </p>
@@ -61,9 +69,9 @@ const MatchDetails = () => {
               <div className="relative flex justify-between">
                 {
                   matchData?.teams?.map((team, i) => (
-                    <div key={i} className="flex flex-col items-center justify-center md:text-base text-sm text-white">
+                    <div key={i} className="flex flex-col items-center justify-center text-sm text-white md:text-base">
                       <Image width={45} height={45} src={team.logo} alt={team.name} />
-                      <h6 className='md:text-2xl text-base'>{team.name}</h6>
+                      <h6 className='text-base md:text-2xl'>{team.name}</h6>
                     </div>
                   ))
                 }

@@ -1,13 +1,16 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tabs from './_components/Tabs';
 import MatchCard from '@/components/MatchCard';
-import { useForm } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 import { CiFilter } from "react-icons/ci";
 
 import * as matchesApi from "../../APIs/5-matches-Api.js"
 import Filter from './_components/Filter';
+import moment from 'moment';
+import 'moment/locale/ar';
+import Link from 'next/link';
+
 
 
 const matchesData = [
@@ -46,13 +49,24 @@ const matchesData = [
 
 const Matches = () => {
   const [openFilter, setOpenFilter] = useState(false);
+  const [selectedTab, setSelectedTab] = useState();
+  // const [selectedTab, setSelectedTab] = useState(moment().locale("en").format('YYYY-MM-DD'))
 
-  const { data, isLoading, isError, error, isSuccess  } = useQuery({
-    queryKey: "matches",
-    queryFn: matchesApi.fetchMatchesData
-  })
+  const { 
+    data, 
+    isLoading, 
+    isError, 
+    isSuccess,  
+    error, 
+    refetch
+  } = useQuery({
+    queryKey: ["matches"],
+    queryFn: () => matchesApi.fetchMatchesData(selectedTab, selectedTab)
+  });
 
-  // console.log(data.data.items)
+  useEffect(() => {
+    refetch()
+  }, [selectedTab, refetch])
 
   return (
     <div>
@@ -69,17 +83,29 @@ const Matches = () => {
           </button>
       </div>
 
-        <Tabs />
+        <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
         <Filter openFilter={openFilter} setOpenFilter={setOpenFilter} />
 
-        <div className="grid grid-cols-1 gap-5 mt-5 md:grid-cols-3">
-          {
-            data?.data?.items?.map((match, i) => (
-              <MatchCard match={match} key={i} />
-            ))
-          }
-        </div>
+        {
+          data?.data?.items?.length > 0 ? (
+            <div className="grid grid-cols-1 gap-5 mt-5 md:grid-cols-3">
+              {
+                data?.data?.items?.map((match, i) => (
+                  <Link href={`/matches/${match.id}`} key={i}>
+                    <MatchCard match={match} />
+                  </Link>
+                ))
+              }
+            </div>
+          ) : (
+            <div className="w-full py-10 text-xl text-center text-gray-200">
+              <p>لا يوجد مباريات</p>
+            </div>
+          )
+        }
+
+
       </div>
     </div>
   )

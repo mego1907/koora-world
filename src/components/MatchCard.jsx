@@ -5,10 +5,10 @@ const MatchCard = ({ match }) => {
   const bgs = ["bg-card1", "bg-card2", "bg-card3", "bg-card4", "bg-card5"]
 
   return (
-    <div className={`${bgs[Math.floor(Math.random() * 5)]} text-white rounded-[4px] p-4 relative`}>
+    <div className={`${bgs[Math.floor(Math.random() * 5)]} text-white rounded-[4px] p-4 relative h-full`}>
       <p className='mb-4 text-center'>
+        <span className='mx-4 text-yellow-500'>{match?.time}</span>
         {match?.date}
-        <span className='mr-4 text-yellow-500'>{match?.time}</span>
       </p>
 
       <img src="/assets/left-ball.png" className="absolute left-0 -translate-y-1/2 top-1/2" alt="" />

@@ -4,26 +4,25 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { useAppContext } from '@/contexts/AppContext';
 import { useQuery } from "@tanstack/react-query";
 import * as profileApi from "../../APIs/2-Profile-Api";
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
+import { useEffect } from "react";
 
 const Profile = () => {
   const { userData } = useAppContext();
-  const router = useRouter()
+
+  // Protected route
+  useEffect(() => {
+    if (!userData) {
+      redirect("/")
+    }
+  }, [userData])
 
   const { data, isLoading } = useQuery({ 
     queryKey: ["fetchProfileData"], 
     queryFn: () => profileApi.fetchProfileInfo(userData.token) 
   })
 
-  if (isLoading) {
-    return <LoadingSpinner />
-  }
-
-
-  if(!userData?.token) {
-    router.push("/")
-  } 
-
+  if (isLoading) return <LoadingSpinner />
 
   return (
     <div>

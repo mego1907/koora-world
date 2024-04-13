@@ -2,7 +2,7 @@ import { API_BASE_URL, headersFn } from "./common"
 
 
 export const fetchAllPackages = async (token) => {
-  const response = await fecth(`${API_BASE_URL}/Client/package/GetAllPackage`, {
+  const response = await fetch(`${API_BASE_URL}/Client/package/GetAllPackage`, {
     method: "GET",
     headers: headersFn(token)
   })

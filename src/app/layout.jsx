@@ -11,7 +11,8 @@ import { CookiesProvider } from 'next-client-cookies/server';
 const inter = Inter({ subsets: ['latin'] })
 const tajawal = Tajawal({
   subsets: ['arabic'],
-  weight: ['200', '300', '400', '500', '700', '800', '900']
+  weight: ['200', '300', '400', '500', '700', '800', '900'],
+  display: "swap",
 })
 
 export const metadata = {

@@ -1,13 +1,18 @@
 import { API_BASE_URL, headersFn } from "./common";
 
-export const fetchMatchesData = async () => {
-  const response = await fetch(`${API_BASE_URL}/match/`, {
-    method: "GET",
-    headers: headersFn()
-  })
+export const fetchMatchesData = async (dateFrom, dateTo) => {
+  let response;
 
-  if(!response.ok) {
-    throw new Error("Error fetching Matches Data")
+  if (dateFrom || dateTo) {
+    response = await fetch(`${API_BASE_URL}/match?date_from=${dateFrom}&date_to=${dateTo}`, {
+      method: "GET",
+      headers: headersFn(),
+    })
+  } else {
+    response = await fetch(`${API_BASE_URL}/match`, {
+      method: "GET",
+      headers: headersFn(),
+    })
   }
   
   return response.json();
@@ -18,11 +23,7 @@ export const fetchMatchDetails = async (matchId) => {
     method: "GET",
     headers: headersFn()
   })
-
-  if(!response.ok) {
-    throw new Error("Error fetching Match Details")
-  }
-
+  
   return response.json();
 };
 
