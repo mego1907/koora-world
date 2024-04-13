@@ -6,7 +6,6 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import * as apiClient from "../../../api-client";
 
 const CompetitionDetails = () => {
-
   const { id } = useParams();
 
   const { data, isLoading } = useQuery({ queryKey: ["fetchCompetitionDetails"], queryFn: apiClient.fetchCompetitionDetails })
@@ -14,8 +13,6 @@ const CompetitionDetails = () => {
   if(isLoading) {
     return <LoadingSpinner />
   }
-
-  console.log(data)
 
   return (
     <div className='flex'>

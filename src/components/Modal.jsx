@@ -1,25 +1,22 @@
-import React from 'react'
+import { RiCloseLine } from "react-icons/ri";
 
-const Modal = ({ children, open, setOpen, title = "تسجيل الدخول" }) => {
-
+const Modal = ({ children, open, setOpen, onClose, width = "md:w-5/12" }) => {
   return (
     <div className='relative'>
       {/* Overlay */}
       <div 
-        className={`fixed top-0 ${open ? "block" : "hidden"} left-0 z-20 w-full h-screen bg-overlay`}
-        onClick={() => setOpen(false)}
+        className={`fixed top-0 left-0 ${open ? "scale-y-100" : "scale-y-0"} z-20 w-full h-screen bg-overlay transition-all`}
+        onClick={onClose}
       ></div>
 
-
-
-      <div className={`fixed z-50 md:w-5/12 w-full p-2 -translate-x-1/2 ${open ? "-translate-y-1/2 top-1/2 opacity-100" : "-top-[200%] opacity-0 -translate-y-screen"}  bg-[#306ba5] rounded-md shadow-md  left-1/2 transition-all`}>
-
-        <div className="p-4">
+      <div className={`fixed z-50 ${width} w-full p-2 top-1/2 -translate-y-1/2 -translate-x-1/2 ${open ? "scale-y-100" : "scale-y-0"} bg-[#306ba5] rounded-md shadow-md  left-1/2 transition-all`}>
+        <button type="button" className="mt-2 mr-2" onClick={onClose}>
+          <RiCloseLine fontSize={28} className="text-red-500" />
+        </button>
+        <div className="p-4 pt-0 text-white">
           {children}
         </div>
-
       </div>
-
     </div>
   )
 }

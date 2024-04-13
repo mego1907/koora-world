@@ -16,7 +16,13 @@ module.exports = {
         "primary": "#cf4899",
         "secondary": "#072B4F",
         "match": "#0B5A25",
-        "overlay": "rgba(0, 0, 0, 0.6)"
+        "match-finish": "rgba(22, 30, 38, 1)",
+        "overlay": "rgba(0, 0, 0, 0.6)",
+        "card1": "rgba(11, 90, 37, 1)",
+        "card2": "rgba(18, 70, 73, 1)",
+        "card3": "rgba(50, 117, 181, 1)",
+        "card4": "rgba(64, 8, 55, 1)",
+        "card5": "rgba(140, 7, 55, 1)"
       }
     },
   },

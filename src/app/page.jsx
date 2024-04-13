@@ -7,12 +7,12 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import SectionTitle from '@/components/SectionTitle'
 
 import { useQuery } from "@tanstack/react-query";
-import * as apiClient from "../api-client";
+import * as homeApi from "../APIs/3-Home-Api";
 
 export default function Home() {
   const { data: homeData, isLoading } = useQuery({ 
     queryKey: ["fetchHomeData"], 
-    queryFn: apiClient.fetchHomeData
+    queryFn: homeApi.fetchHomeData
   });
 
   const allExpectations = [
@@ -62,7 +62,6 @@ export default function Home() {
       ]
     }
   ];
-
 
   const allMatchesData = [
     {

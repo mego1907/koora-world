@@ -1,107 +1,113 @@
 "use client";
-import React, { useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import Modal from './Modal'
 import { useAppContext } from '@/contexts/AppContext';
 import { setItemInLocalStorage } from '@/utils';
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import * as authApi from "../APIs/1-auth-Api";
+import { LiaSpinnerSolid } from "react-icons/lia";
 
-const Login = ({ openLogin, setOpenLogin }) => {
+
+const Login = () => {
   const formRef = useRef(undefined);
+  const {
+    userData,
+    setUserData,
+    showToast,
+    setOpenLogin,
+    openLogin
+  } = useAppContext();
 
-  const { userData, setUserData } = useAppContext();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    clearErrors
+  } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const phone = e.target[0];
-    const password = e.target[1];
-
-    const formData = new FormData();
-    formData.append("phone", phone.value);
-    formData.append("password", password.value);
-
-    try{
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
-        method: "POST",
-        body: formData
-      });
-      
-
-      console.log(res)
-
-      const data = await res.json();
-      setUserData(data.data)
-      setItemInLocalStorage("user", JSON.stringify(data.data))
-      // localStorage && localStorage.setItem("user", JSON.stringify(data.data));
-      setOpenLogin(false);
-
-    } catch(err) {
-      console.log(err.message)
+  const mutation = useMutation({
+    mutationFn: authApi.login,
+    onSuccess: (val) => {
+      if (val.success) {
+        showToast({ type: "SUCCESS", message: `أهلا بك ${val.data.name}` })
+        setUserData(val?.data);
+        setItemInLocalStorage("user", JSON.stringify(val?.data))
+        setOpenLogin(false);
+      } else {
+        showToast({ type: "ERROR", message: val.message })
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+      showToast({ type: "ERROR", message: `ERROR` })
     }
-    
+  })
+
+
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("phone", data.phone);
+    formData.append("password", data.password);
+
+    mutation.mutate(formData);
   }
 
   const closeModal = () => {
     setOpenLogin(false);
-
-    console.log(formRef.current)
+    clearErrors();
   }
 
+
   return (
-    <Modal 
-      open={openLogin} 
+    <Modal
+      open={openLogin}
       setOpen={setOpenLogin}
+      onClose={closeModal}
     >
+      <h3 className="mb-5 text-xl font-bold text-center md:text-2xl">تسجيل الدخول</h3>
 
-      <h3 className="mb-5 text-2xl font-bold text-center">تسجيل الدخول</h3>
+      <div className="flex flex-col justify-center w-full gap-3 mx-auto md:w-8/12">
+        <form onSubmit={handleSubmit(onSubmit)} ref={formRef} className="flex flex-col gap-2">
 
-      <div className="flex flex-col justify-center md:w-8/12 w-full gap-3 mx-auto">
-        <form onSubmit={handleSubmit} ref={formRef}>
-          <div className="flex flex-col gap-2">
-            <label 
-              htmlFor="phone"
-            >
-              رقم الهاتف
-            </label>
+          <label className="flex flex-col gap-2 mb-3">
+            رقم الهاتف
             <input
               placeholder='ادخل رقم هاتفك'
               type="text"
               className='p-2 px-2 bg-transparent border border-white rounded-md outline-none'
               id="phone"
               name="phone"
+              {...register("phone", { required: "رقم الهاتف مطلوب" })}
             />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label 
-              htmlFor="password"
-            >
-              كلمة المرور
-            </label>
+            {errors?.phone && <p className='text-sm font-semibold text-red-400'>{errors.phone.message}</p>}
+          </label>
+          <label className="flex flex-col gap-2">
+            كلمة المرور
             <input
-              placeholder='ادخل رقم هاتفك'
-              type="text"
-              className='p-2 px-2 bg-transparent border border-white rounded-md outline-none'
+              placeholder='*********'
+              type="password"
+              className='p-2 px-2 tracking-wider bg-transparent border border-white rounded-md outline-none'
               id="password"
               name="password"
+              {...register("password", { required: "كلمة المرور مطلوبة" })}
             />
-          </div>
+            {errors?.password && <p className='text-sm font-semibold text-red-400'>{errors.password?.message}</p>}
+          </label>
 
-          <div className="flex justify-center gap-2 mt-5">
+          {mutation?.data && <p className={`text-sm text-center font-semibold ${mutation.data.success ? "text-green-400" : "text-red-300"}`}>{mutation?.data?.message}</p>}
+
+          <div className="flex justify-center gap-2 mt-3">
             <button
               type="submit"
-              className='px-5 pt-2 pb-3 font-medium border border-white rounded-md'
+              className='flex items-center justify-center gap-2 px-5 py-2 font-medium bg-green-500 border border-green-500 rounded-md'
             >
               تسجيل الدخول
-            </button>
-            <button
-              type="button"
-              onClick={closeModal}
-              className='px-5 pt-1 pb-2 text-sm font-medium bg-red-700 rounded-md'
-            >
-              إغلاق
+              {mutation?.isPending && <LiaSpinnerSolid className='animate-spin' />}
             </button>
           </div>
-          
+
         </form>
       </div>
     </Modal>
