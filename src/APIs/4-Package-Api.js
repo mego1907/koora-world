@@ -10,7 +10,7 @@ export const fetchAllPackages = async (token) => {
   return response.json()
 } 
 
-export const subscribeToThePackage = async (token, formData) => {
+export const subscribeToThePackage = async ({ token, formData }) => {
   const response = await fetch(`${API_BASE_URL}/Client/package/Subscription`, {
     method: "POST",
     headers: headersFn(token),

@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import React, { useEffect } from 'react'
 import * as packagesApi from "../../APIs/4-Package-Api";
 import { LoadingSpinner } from '@/components';
+import { LiaSpinnerSolid } from "react-icons/lia";
 
 
 const fakePackagesData = [
@@ -26,7 +27,7 @@ const fakePackagesData = [
 ]
 
 const Packages = () => {
-  const { userData } = useAppContext();
+  const { userData, showToast } = useAppContext();
 
   // Protected routes
   useEffect(() => {
@@ -43,9 +44,14 @@ const Packages = () => {
   const mutation = useMutation({
     mutationFn: packagesApi.subscribeToThePackage,
     onSuccess: (data) => {
-      console.log("Data :", data)
+      if(data.success) {
+        showToast({ type: "SUCCESS", message: data.message });
+      } else {
+        showToast({ type: "ERROR", message: data.message });
+      }
     },
     onError: (err) => {
+      showToast({ type: "ERROR", message: err.message });
       console.log("Error :", err)
     },
   })
@@ -54,16 +60,13 @@ const Packages = () => {
 
   const selectPackage = (id) => {
     const formData = new FormData();
-    formData.append("package_id", id)
+    formData.append("package_id", id);
 
-    mutation.mutate(userData?.token, formData)
+    mutation.mutate({ token: userData?.token, formData: formData })
   }
 
 
-  if (isLoading) {
-    return <LoadingSpinner />
-  }
-
+  if (isLoading) return <LoadingSpinner />
 
   return (
     <div>
@@ -83,7 +86,7 @@ const Packages = () => {
                 <div>
                   <button 
                     type="button" 
-                    className='w-full px-10 py-2 rounded-full bg-emerald-100'
+                    className='flex items-center justify-center w-full gap-2 px-10 py-2 rounded-full bg-emerald-100'
                     onClick={() => selectPackage(id)}
                   >
                     إختيار
