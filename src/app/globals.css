@@ -27,3 +27,19 @@ body {
   background-color: #cf4899;
   border-radius: 16px;
 }
+
+/* Pagination in matchs */
+
+.ant-pagination .ant-pagination-item a {
+  color: #fff
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: #000;
+}
+
+.ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination .ant-pagination-next .ant-pagination-item-link {
+  color: #fff;
+  transform: rotate(180deg);
+}

@@ -10,6 +10,8 @@ const Filter = ({ openFilter, setOpenFilter }) => {
   return (
     <Modal open={openFilter} setOpen={setOpenFilter} onClose={handleClose} width='md:w-8/12'>
       <h3 className="text-2xl text-center">فلاتر البحث</h3>
+
+      
     </Modal>
   )
 }

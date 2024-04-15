@@ -1,15 +1,15 @@
 import { API_BASE_URL, headersFn } from "./common";
 
-export const fetchMatchesData = async (dateFrom, dateTo) => {
+export const fetchMatchesData = async (dateFrom, dateTo, page) => {
   let response;
 
   if (dateFrom || dateTo) {
-    response = await fetch(`${API_BASE_URL}/match?date_from=${dateFrom}&date_to=${dateTo}`, {
+    response = await fetch(`${API_BASE_URL}/match?page${page}&date_from=${dateFrom}&date_to=${dateTo}`, {
       method: "GET",
       headers: headersFn(),
     })
   } else {
-    response = await fetch(`${API_BASE_URL}/match`, {
+    response = await fetch(`${API_BASE_URL}/match?page${page}`, {
       method: "GET",
       headers: headersFn(),
     })

@@ -6,7 +6,8 @@ import Footer from '@/components/Footer'
 import { AppContextProvider } from '@/contexts/AppContext';
 import ReactQueryProvider from './ReactQueryProvider';
 import { CookiesProvider } from 'next-client-cookies/server';
-
+import { ConfigProvider } from 'antd';
+import ar_EG from 'antd/locale/ar_EG';
 
 const inter = Inter({ subsets: ['latin'] })
 const tajawal = Tajawal({
@@ -23,6 +24,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ConfigProvider locale={ar_EG}>
+      
     <html lang="ar" dir="rtl">
       <body className={[tajawal.className]}>
         <ReactQueryProvider>
@@ -34,5 +37,6 @@ export default function RootLayout({ children }) {
         </ReactQueryProvider>
       </body>
     </html>
+    </ConfigProvider>
   )
 }

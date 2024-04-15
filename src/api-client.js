@@ -76,10 +76,6 @@ export const fetchCompetitionDetails = async (token, id) => {
     headers: headersFn(token)
   })
 
-  if (!response.ok) {
-    throw new Error("Error fetching Competition Details")
-  }
-
   return response.json()
 }
 

@@ -16,7 +16,7 @@ const MatchExpectation = () => {
     mutationFn: expectationsApi.predictTheExpectation,
     onSuccess: (data) => {
       showToast({ type: "SUCCESS", message: data?.message })
-    }
+    },
   })
 
   const teams = [
@@ -37,8 +37,9 @@ const MatchExpectation = () => {
       formData.append("input1", data.input1)
       formData.append("input2", data.input2)
       
-      mutation.mutate(userData.token, formData)
+      mutation.mutate(userData.token, formData);
     }
+    
   }
 
   return (

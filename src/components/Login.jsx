@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Modal from './Modal'
 import { useAppContext } from '@/contexts/AppContext';
 import { setItemInLocalStorage } from '@/utils';
@@ -7,9 +7,12 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import * as authApi from "../APIs/1-auth-Api";
 import { LiaSpinnerSolid } from "react-icons/lia";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const formRef = useRef(undefined);
   const {
     userData,
@@ -85,14 +88,23 @@ const Login = () => {
           </label>
           <label className="flex flex-col gap-2">
             كلمة المرور
-            <input
-              placeholder='*********'
-              type="password"
-              className='p-2 px-2 tracking-wider bg-transparent border border-white rounded-md outline-none'
-              id="password"
-              name="password"
-              {...register("password", { required: "كلمة المرور مطلوبة" })}
-            />
+            <div className="relative w-full">
+              <input
+                placeholder='*********'
+                type={showPassword ? "text" : "password"}
+                className='w-full p-2 px-2 tracking-wider bg-transparent border border-white rounded-md outline-none'
+                id="password"
+                name="password"
+                {...register("password", { required: "كلمة المرور مطلوبة" })}
+              />
+              <button 
+                type='button' 
+                className='absolute -translate-y-1/2 left-3 top-1/2' 
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <VscEye /> : <VscEyeClosed />}
+              </button>
+            </div>
             {errors?.password && <p className='text-sm font-semibold text-red-400'>{errors.password?.message}</p>}
           </label>
 

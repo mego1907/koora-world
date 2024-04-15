@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from './Modal'
 import { useAppContext } from '@/contexts/AppContext';
 import { setItemInLocalStorage } from '@/utils';
@@ -7,8 +7,12 @@ import { useForm } from 'react-hook-form';
 import * as authApi from "../APIs/1-auth-Api";
 import { useMutation } from '@tanstack/react-query';
 import { LiaSpinnerSolid } from 'react-icons/lia';
+import { VscEye, VscEyeClosed } from 'react-icons/vsc';
 
 const Register = ({ openRegister }) => {
+    const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
   const { userData, setUserData, showToast, setOpenRegister } = useAppContext();
   const {
     register,
@@ -91,27 +95,46 @@ const Register = ({ openRegister }) => {
 
           <label className="flex flex-col gap-2 mb-2">
             كلمة المرور
-            <input
-              placeholder='************'
-              type="password"
-              className='p-2 px-2 bg-transparent border border-white rounded-md outline-none'
-              id="password"
-              name="password"
-              {...register("password", { required: "كلمة المرور مطلوبة" })}
-            />
+            <div className="relative w-full">
+              <input
+                placeholder='*********'
+                type={showPassword ? "text" : "password"}
+                className='w-full p-2 px-2 tracking-wider bg-transparent border border-white rounded-md outline-none'
+                id="password"
+                name="password"
+                {...register("password", { required: "كلمة المرور مطلوبة" })}
+              />
+              <button
+                type='button'
+                className='absolute -translate-y-1/2 left-3 top-1/2'
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <VscEye /> : <VscEyeClosed />}
+              </button>
+            </div>
             {errors?.password && <p className="text-sm font-semibold text-red-300">{errors.password.message}</p>}
           </label>
 
           <label className="flex flex-col gap-2 mb-2">
             تأكيد كلمة المرور
-            <input
-              placeholder='************'
-              type="password"
-              className='p-2 px-2 bg-transparent border border-white rounded-md outline-none'
-              id="confirmPassword"
-              name="confirmPassword"
-              {...register("confirmPassword", { required: "كلمة المرور مطلوبة" })}
-            />
+            <div className="relative w-full">
+              <input
+                placeholder='*********'
+                type={showConfirmPassword ? "text" : "password"}
+                className='w-full p-2 px-2 tracking-wider bg-transparent border border-white rounded-md outline-none'
+                id="confirmPassword"
+                name="confirmPassword"
+                {...register("confirmPassword", { required: "كلمة المرور مطلوبة" })}
+              />
+              <button
+                type='button'
+                className='absolute -translate-y-1/2 left-3 top-1/2'
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? <VscEye /> : <VscEyeClosed />}
+              </button>
+            </div>
+
             {errors?.confirmPassword && <p className='text-sm font-semibold text-red-300'>{errors.confirmPassword.message}</p>}
           </label>
 
