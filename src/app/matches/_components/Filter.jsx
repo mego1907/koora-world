@@ -2,11 +2,19 @@ import { Modal } from '@/components'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import React, { useState } from 'react';
 import * as filterApi from "../../../APIs/5-matches-Api"
+import { LiaSpinnerSolid } from 'react-icons/lia';
 
-const Filter = ({ openFilter, setOpenFilter }) => {
-  const [selectedLeague, setSelectedLeague] = useState(undefined);
-  const [selectedTeam, setSelectedTeam] = useState(undefined);
-  const [selectedPlayer, setSelectedPlayer] = useState(undefined);
+const Filter = ({ 
+  openFilter, 
+  setOpenFilter, 
+  setSelectedTeam, 
+  selectedTeam, 
+  setSelectedLeague, 
+  selectedLeague,
+  refetch
+}) => {
+  // const [selectedLeague, setSelectedLeague] = useState(undefined);
+  // const [selectedTeam, setSelectedTeam] = useState(undefined);
 
   const { data: leagueData } = useQuery({
     queryKey: ["fetchLeagueData"],
@@ -18,15 +26,16 @@ const Filter = ({ openFilter, setOpenFilter }) => {
     mutationFn: filterApi.fetchTeamsData
   })
 
-  const playerMutation = useMutation({
-    mutationKey: ["fetchTeamsData"],
-    mutationFn: filterApi.fetchTeamsData
-  })
-
 
   const handleClose = () => {
     setOpenFilter(false);
   }
+
+  const handleSearch = () => {
+    refetch();
+    setOpenFilter(false);
+  }
+
 
 
   return (
@@ -42,7 +51,7 @@ const Filter = ({ openFilter, setOpenFilter }) => {
       <div className="flex flex-col h-full">
 
         <div className="flex flex-col">
-          <h3 className='mb-2 text-base font-semibold'>اختار البطولة</h3>
+          <h3 className='mb-2 text-base font-semibold py-3'>اختار البطولة</h3>
 
           <div className="flex flex-wrap gap-3">
             {
@@ -68,7 +77,7 @@ const Filter = ({ openFilter, setOpenFilter }) => {
         {
           selectedLeague && (
             <div className="flex flex-col">
-              <h3 className='mb-2 text-base font-semibold'>اختار  الفريق</h3>
+              <h3 className='mb-2 text-base font-semibold py-5'>اختار  الفريق</h3>
 
               <div className="flex flex-wrap h-full gap-3">
                 {
@@ -93,33 +102,17 @@ const Filter = ({ openFilter, setOpenFilter }) => {
           )
         }
 
-        {
-          selectedTeam && (
-            <div className="flex flex-col">
-              <h3 className='mb-2 text-base font-semibold'>اختار  اللاعب</h3>
+        <div className="flex justify-center gap-2 mt-8 sticky bottom-3">
+          <button
+            type="submit"
+            className='flex items-center justify-center gap-2 px-10 py-2 font-medium bg-green-500 border border-green-500 rounded-md'
+            onClick={handleSearch}
+          >
+            بحث
+            {/* {mutation?.isPending && <LiaSpinnerSolid className='animate-spin' />} */}
+          </button>
+        </div>
 
-              <div className="flex flex-wrap h-full gap-3">
-                {
-                  mutation?.data?.data?.map((player) => (
-                    <button
-                      key={player?.id}
-                      onClick={() => {
-                        setSelectedPlayer(player.id);
-                      }}
-                      type="button"
-                      className={`p-1 px-2 text-sm
-                        ${selectedPlayer === player.id ? "bg-teal-500" : ""}
-                        text-white border border-white rounded-full
-                      `}
-                    >
-                      {player?.name}
-                    </button>
-                  ))
-                }
-              </div>
-            </div>
-          )
-        }
       </div>
 
     </Modal>

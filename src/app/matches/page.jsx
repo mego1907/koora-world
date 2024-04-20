@@ -16,7 +16,8 @@ const Matches = () => {
   const [openFilter, setOpenFilter] = useState(false);
   const [selectedTab, setSelectedTab] = useState(undefined);
   // const [selectedTab, setSelectedTab] = useState(moment().locale("en").format('YYYY-MM-DD'));
-
+  const [selectedLeague, setSelectedLeague] = useState(undefined);
+  const [selectedTeam, setSelectedTeam] = useState(undefined);
 
   const [pageNumber, setPageNumber] = useState(1)
 
@@ -29,7 +30,13 @@ const Matches = () => {
     refetch
   } = useQuery({
     queryKey: ["matches"],
-    queryFn: () => matchesApi.fetchMatchesData(selectedTab, selectedTab, pageNumber)
+    queryFn: () => matchesApi.fetchMatchesData(
+      selectedTab, 
+      selectedTab, 
+      pageNumber, 
+      selectedLeague, 
+      selectedTeam
+    )
   });
 
   useEffect(() => {
@@ -54,7 +61,15 @@ const Matches = () => {
 
         <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
-        <Filter openFilter={openFilter} setOpenFilter={setOpenFilter} />
+        <Filter 
+          openFilter={openFilter} 
+          setOpenFilter={setOpenFilter} 
+          selectedLeague={selectedLeague}
+          setSelectedLeague={setSelectedLeague}
+          selectedTeam={selectedTeam}
+          setSelectedTeam={setSelectedTeam}
+          refetch={refetch}
+        />
 
         {
           data?.data?.items?.length > 0 ? (

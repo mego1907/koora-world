@@ -1,6 +1,6 @@
 import { API_BASE_URL, headersFn } from "./common";
 
-export const fetchMatchesData = async (dateFrom, dateTo, page) => {
+export const fetchMatchesData = async (dateFrom, dateTo, page, leagueId, teamId) => {
   let response;
 
   if (dateFrom || dateTo) {
@@ -9,7 +9,7 @@ export const fetchMatchesData = async (dateFrom, dateTo, page) => {
       headers: headersFn(),
     })
   } else {
-    response = await fetch(`${API_BASE_URL}/match?page${page}`, {
+    response = await fetch(`${API_BASE_URL}/match?page${page}&league_id=${leagueId || ""}&team_id=${teamId || ""}`, {
       method: "GET",
       headers: headersFn(),
     })
