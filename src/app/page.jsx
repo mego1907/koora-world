@@ -112,9 +112,7 @@ export default function Home() {
   ]
 
 
-  if(isLoading) {
-    return <LoadingSpinner />
-  }
+  if(isLoading) return <LoadingSpinner />
 
   return (
     <main className="">

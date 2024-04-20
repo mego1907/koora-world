@@ -35,8 +35,8 @@ export const fetchExpectationsData = async (token) => {
     headers: headersFn(token),
   });
 
-  if (!response.ok) {
-    throw new Error("Error fetching Expectations Data")
+  if(response.status === 401) {
+    throw new Error("Unauthorized");
   }
 
   return response.json();

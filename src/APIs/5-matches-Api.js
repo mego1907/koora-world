@@ -33,9 +33,14 @@ export const fetchLeagueData = async () => {
     headers: headersFn()
   })
 
-  if(!response.ok) {
-    throw new Error("Error fetching League Data")
-  }
+  return response.json();
+};
+
+export const fetchTeamsData = async (countryId) => {
+  const response = await fetch(`${API_BASE_URL}/match/Teams?country_id=${countryId}`, {
+    method: "GET",
+    headers: headersFn()
+  })
 
   return response.json();
 };
@@ -53,15 +58,11 @@ export const fetchCountryData = async () => {
   return response.json();
 };
 
-export const ftechTeamsByCountry = async (id) => {
+export const fetechTeamsByCountry = async (id) => {
   const response = await fetch(`${API_BASE_URL}/match/Teams?country_id=${id}`, {
     method: "GET",
     headers: headersFn()
   })
-
-  if(!response.ok) {
-    throw new Error("Error fetching Teams by Country")
-  }
 
   return response.json();
 }

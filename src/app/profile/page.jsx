@@ -142,7 +142,7 @@ const Profile = () => {
             </label>
           </div>
 
-          <div className="grid grid-cols-3 gap-12 my-8">
+          <div className="grid md:grid-cols-3 grid-cols-1 gap-12 my-8">
             {/* Name */}
             <div className="grid items-center w-full grid-rows-2 gap-2 text-white md:items-start">
               <h3 className="text-base font-semibold text-gray-300 md:text-xl">الاسم</h3>

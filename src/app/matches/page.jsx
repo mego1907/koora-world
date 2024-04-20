@@ -12,45 +12,9 @@ import 'moment/locale/ar';
 import Link from 'next/link';
 import { Pagination } from 'antd';
 
-
-
-const matchesData = [
-  {
-    id: 1,
-    date: "الثلاثاء ، 7 فبراير",
-    time: "بدءت",
-    result: "02 - 02",
-    firstTeamName: "مانشستر يونيتد",
-    secondTeamName: "برشلونه",
-    firstTeamImage: "/assets/man-city.png",
-    secondTeamImage: "/assets/barcelona.png"
-  },
-  {
-    id: 2,
-    date: "الثلاثاء ، 7 فبراير",
-    time: "بدءت",
-    result: "02 - 02",
-    firstTeamName: "مانشستر يونيتد",
-    secondTeamName: "برشلونه",
-    firstTeamImage: "/assets/man-city.png",
-    secondTeamImage: "/assets/barcelona.png"
-  },
-  {
-    id: 3,
-    date: "الثلاثاء ، 7 فبراير",
-    time: "بدءت",
-    result: "02 - 02",
-    firstTeamName: "مانشستر يونيتد",
-    secondTeamName: "برشلونه",
-    firstTeamImage: "/assets/man-city.png",
-    secondTeamImage: "/assets/barcelona.png"
-  },
-]
-
-
 const Matches = () => {
   const [openFilter, setOpenFilter] = useState(false);
-  const [selectedTab, setSelectedTab] = useState();
+  const [selectedTab, setSelectedTab] = useState(undefined);
   // const [selectedTab, setSelectedTab] = useState(moment().locale("en").format('YYYY-MM-DD'));
 
 

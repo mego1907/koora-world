@@ -1,21 +1,21 @@
 "use client";
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ChampionshipCard from "./_components/ChampionshipCard";
-import Link from "next/link";
 
 import { useState, useEffect } from "react";
 import { getItemFromLocalStorage } from "@/utils";
 import { useAppContext } from "@/contexts/AppContext";
 
-import { useQuery } from "@tanstack/react-query";
 import * as apiClient from "../../api-client";
 
 const Expectaions = () => {
-  const { userData } = useAppContext();
+  const { userData, setOpenLogin } = useAppContext();
 
-  const { data, isLoading } = useQuery({ 
+  const { data, isLoading, error, status } = useQuery({ 
     queryKey: ["fetchExpectationsData"], 
-    queryFn: () => apiClient.fetchExpectationsData(userData?.token) 
+    queryFn: () => apiClient.fetchExpectationsData(userData?.token),
   })
 
   const expectaions = [
@@ -78,10 +78,26 @@ const Expectaions = () => {
 
   if (isLoading) return <LoadingSpinner />
 
+
   return (
     <div>
       <div className="container m-auto">
-        <h3 className='pb-5 md:text-4xl text-2xl font-medium text-white md:pt-9 pt-5'>التوقعات</h3>
+        <h3 className='pt-5 pb-5 text-2xl font-medium text-white md:text-4xl md:pt-9'>التوقعات</h3>
+
+        {
+          !userData?.token && (
+            <div className="flex flex-col items-center justify-center gap-2 text-white">
+              <p className="text-base font-medium">يجب عليك تسجيل الدخول الي حسابك أولاً</p>
+              <button
+                type="submit"
+                className='flex items-center justify-center gap-2 px-5 py-2 font-medium bg-green-500 border border-green-500 rounded-md'
+                onClick={() => setOpenLogin(true)}
+              >
+                تسجيل الدخول
+              </button>
+            </div>
+          )
+        }
 
         <div>
           <div className="flex flex-wrap mb-5">
