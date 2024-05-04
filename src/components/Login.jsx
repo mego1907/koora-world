@@ -82,6 +82,7 @@ const Login = () => {
               className='p-2 px-2 bg-transparent border border-white rounded-md outline-none'
               id="phone"
               name="phone"
+              maxLength={11}
               {...register("phone", { required: "رقم الهاتف مطلوب" })}
             />
             {errors?.phone && <p className='text-sm font-semibold text-red-400'>{errors.phone.message}</p>}

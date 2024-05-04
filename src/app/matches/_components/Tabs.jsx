@@ -32,7 +32,7 @@ const Tabs = ({ selectedTab, setSelectedTab }) => {
 
   return (
     <div>
-      <div className="flex gap-5 text-xl text-white">
+      <div className="flex gap-5 text-sm text-white md:text-xl">
         {
           tabsData.map((tab) => (
             <button 

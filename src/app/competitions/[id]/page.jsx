@@ -15,13 +15,22 @@ const ContstDetails = () => {
     queryFn: () => contestApi.fetchContestDetails(userData?.token, id)
   })
 
+  console.log("data :", data)
+
   if(isLoading) return <LoadingSpinner />
+
+  if (!data?.data?.home && !data?.data?.away) {
+    return (
+      <div className="h-[70vh] w-full text-white text-xl flex items-center justify-center">
+        <p>لا يوجد بيانات لعرضها</p>
+      </div>
+    )
+  }
 
   return (
     <div className='flex'>
-      <div className="container">
+      <div className="container ">
         {/* {id} */}
-        <p>No Data</p>
       </div>
     </div>
   )

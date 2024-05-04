@@ -48,10 +48,10 @@ const Matches = () => {
     <div>
       <div className="container mx-auto">
       <div className="flex items-center justify-between">
-          <h3 className='pt-2 pb-5 text-4xl font-medium text-white'>المباريات</h3>
+          <h3 className='pt-2 pb-5 text-xl font-medium text-white md:text-4xl'>المباريات</h3>
           <button 
             type='button' 
-            className="flex items-center justify-center gap-2 p-2 px-4 text-base text-white border border-white rounded-md"
+            className="flex items-center justify-center gap-2 p-2 px-4 text-sm text-white border border-white rounded-md md:text-xs"
             onClick={() => setOpenFilter(true)}
           >
             فلاتر البحث

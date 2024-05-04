@@ -75,29 +75,38 @@ const Expectaions = () => {
     },
   ]
 
+  console.log(data?.data?.items)
 
   if (isLoading) return <LoadingSpinner />
+
+  if (!userData?.token) {
+    return (
+      <div className="flex flex-col items-center h-[70vh] justify-center gap-2 text-white">
+        <p className="mb-5 text-sm font-medium md:text-3xl">يجب عليك تسجيل الدخول الي حسابك أولاً</p>
+        <button
+          type="submit"
+          className='flex items-center justify-center gap-2 px-5 py-2 text-xs font-medium bg-green-500 border border-green-500 rounded-md md:text-base'
+          onClick={() => setOpenLogin(true)}
+        >
+          تسجيل الدخول
+        </button>
+      </div>
+    )
+  }
+
+  if (!data?.data?.items.length) {
+    return (
+      <div className="h-[70vh] w-full text-white md:text-xl text-xs text-center flex items-center justify-center">
+        <p>لا يوجد بيانات لعرضها</p>
+      </div>
+    )
+  }
 
 
   return (
     <div>
       <div className="container m-auto">
         <h3 className='pt-5 pb-5 text-2xl font-medium text-white md:text-4xl md:pt-9'>التوقعات</h3>
-
-        {
-          !userData?.token && (
-            <div className="flex flex-col items-center justify-center gap-2 text-white">
-              <p className="text-base font-medium">يجب عليك تسجيل الدخول الي حسابك أولاً</p>
-              <button
-                type="submit"
-                className='flex items-center justify-center gap-2 px-5 py-2 font-medium bg-green-500 border border-green-500 rounded-md'
-                onClick={() => setOpenLogin(true)}
-              >
-                تسجيل الدخول
-              </button>
-            </div>
-          )
-        }
 
         <div>
           <div className="flex flex-wrap mb-5">
